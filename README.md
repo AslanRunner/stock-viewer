@@ -10,7 +10,7 @@
 
 **A high-performance financial analytics workstation, institutional charting canvas, and automated market intelligence engine built with Python, FastAPI, and TradingView Lightweight Charts.**
 
-[Overview](#overview) • [Core Capabilities](#core-capabilities) • [Installation](#installation--setup) • [Quickstart](#quickstart) • [Architecture](#architecture) • [Testing](#running-tests) • [License](#license)
+[Overview](#overview) • [Core Capabilities](#core-capabilities) • [Installation](#installation--setup) • [Quickstart](#quickstart) • [Architecture](#architecture) • [Testing](#running-tests) 
 
 </div>
 
