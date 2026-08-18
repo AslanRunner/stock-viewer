@@ -18,8 +18,6 @@
 <body class="dark-theme">
 
     <div class="terminal-layout">
-
-        <!-- ═══ TOP HEADER BAR ═══ -->
         <header class="terminal-header">
             <div class="header-left">
                 <div class="terminal-brand">
@@ -122,7 +120,7 @@
             </div>
         </div>
 
-        <!-- ═══ MAIN BODY: Left Toolbar + Workspace ═══ -->
+        <!--MAIN BODY: Left Toolbar + Workspace  -->
         <div class="terminal-body">
 
             <!-- Left Toolbar (Docked, 48px) -->
@@ -161,14 +159,14 @@
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-1.5M2 22s5-1 7-3l11-11-4-4L5 15c-2 2-3 7-3 7z"/></svg>
                 </button>
 
-                <!-- 🧽 ERASER TOOL (Deletes specific clicked drawing) -->
+                <!-- Eraser Tool -->
                 <button class="tool-icon-btn" data-tool="eraser" title="Eraser (Click any drawing to delete it)">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L18 15"/><path d="M18 12L12 6"/></svg>
                 </button>
                 
                 <div class="tool-divider"></div>
 
-                <!-- 🎨 COLOR PALETTE PICKER CHIPS -->
+                <!-- Color Palette Strip -->
                 <div class="color-palette-strip" title="Drawing Color">
                     <button class="color-dot active" data-color="#f59e0b" style="background:#f59e0b;"></button>
                     <button class="color-dot" data-color="#10b981" style="background:#10b981;"></button>
@@ -207,7 +205,7 @@
                 </button>
             </aside>
 
-            <!-- ═══ CENTER WORKSPACE ═══ -->
+            <!--CENTER WORKSPACE-->
             <main class="center-workspace">
 
                 <!-- SECTION 1: Chart Terminal -->
@@ -283,7 +281,7 @@
                     <!-- RSI Sub-chart -->
                     <div id="rsiContainer" class="rsi-stage"></div>
 
-                    <!-- 📊 ASSET FUNDAMENTALS & COMPARISON PANEL (Under the chart) -->
+                    <!-- Asset Fundamentals & Comparison Panel -->
                     <div id="assetOverviewPanel" class="asset-overview-panel">
                         <div id="primaryAssetCard" class="asset-metric-card primary-asset">
                             <div class="card-top-row">
@@ -329,7 +327,7 @@
                             </div>
                         </div>
 
-                        <!-- Secondary Compare Card (Visible when compare is active) -->
+                        <!-- Secondary Compare Card-->
                         <div id="secondaryCompareCard" class="asset-metric-card compare-asset" style="display:none;">
                             <div class="card-top-row">
                                 <div>
@@ -449,11 +447,11 @@
                                 <div class="form-row">
                                     <label class="form-label">Trigger Condition</label>
                                     <select id="alertConditionSelect" class="select-field">
-                                        <option value="price_above">📈 Price Rises Above ($ Target)</option>
-                                        <option value="price_below">📉 Price Drops Below ($ Stop)</option>
-                                        <option value="change_above">⚡ Momentum Moves (+/- % Change)</option>
-                                        <option value="rsi_above">🔥 RSI Overbought (RSI > 70)</option>
-                                        <option value="rsi_below">❄️ RSI Oversold (RSI < 30)</option>
+                                        <option value="price_above">Price Rises Above ($ Target)</option>
+                                        <option value="price_below">Price Drops Below ($ Stop)</option>
+                                        <option value="change_above">Momentum Moves (+/- % Change)</option>
+                                        <option value="rsi_above">RSI Overbought (RSI > 70)</option>
+                                        <option value="rsi_below">RSI Oversold (RSI < 30)</option>
                                     </select>
                                 </div>
                                 <div class="form-row">
@@ -606,7 +604,6 @@
             </main>
         </div>
 
-        <!-- ═══ BOTTOM FOOTER (Chart Timeframe Strip) ═══ -->
         <footer class="terminal-footer">
             <div class="footer-timeframe-bar">
                 <button class="tf-btn" data-period="1d">1D</button>
