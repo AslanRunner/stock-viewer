@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=3.2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script>
+        if (typeof LightweightCharts === 'undefined') {
+            document.write('<script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"><\/script>');
+        }
+    </script>
+</head>
+<body class="dark-theme">
+
+    <div class="terminal-layout">
+
+        <!-- ═══ TOP HEADER BAR ═══ -->
+        <header class="terminal-header">
+            <div class="header-left">
+                <div class="terminal-brand">
+                    <span class="brand-status-dot"></span>
+                    <span class="brand-name">STOCK<span class="brand-accent">VIEWER</span></span>
+                </div>
+                
+                <div class="ticker-selector-box">
+                    <div class="ticker-select-wrap">
+                        <select id="tickerSelect" class="ticker-dropdown">
+                            <option value="AAPL">AAPL &bull; Apple Inc.</option>
+                            <option value="NVDA">NVDA &bull; NVIDIA Corp.</option>
+                            <option value="TSLA">TSLA &bull; Tesla Inc.</option>
+                            <option value="MSFT">MSFT &bull; Microsoft Corp.</option>
+                            <option value="META">META &bull; Meta Platforms</option>
+                            <option value="AMZN">AMZN &bull; Amazon.com Inc.</option>
+                            <option value="GOOGL">GOOGL &bull; Alphabet Inc.</option>
+                            <option value="RKLB">RKLB &bull; Rocket Lab USA</option>
+                        </select>
+                    </div>
+                    <div class="ticker-search-wrap">
+                        <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="tickerCustomInput" class="ticker-search-input" placeholder="SYMBOL...">
+                        <span class="kbd-hint">/</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tab Strip -->
+            <div class="header-center">
+                <nav class="nav-tab-strip">
+                    <button class="tab-btn active" data-tab="analysis">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-5 5"/></svg>
+                        <span>Terminal</span>
+                    </button>
+                    <button class="tab-btn" data-tab="watchlist">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                        <span>Watchlist</span>
+                    </button>
+                    <button class="tab-btn" data-tab="alerts">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span>Alerts</span>
+                    </button>
+                    <button class="tab-btn" data-tab="reports">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <span>Intelligence</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Header Right: Compare Trigger + Quick Actions + Theme Switcher -->
+            <div class="header-right">
+                <button id="compareBtn" class="action-icon-btn" title="Compare against a 2nd symbol">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span>Compare</span>
+                </button>
+                
+                <button id="quickReportBtn" class="action-icon-btn highlight" title="Export Executive Report" onclick="switchTab('reports')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Export</span>
+                </button>
+
+                <!-- Capsule Pill Dark/Light Mode Switch -->
+                <label class="theme-toggle-pill" title="Toggle Light/Dark Theme">
+                    <input type="checkbox" id="themeToggleCheckbox" checked>
+                    <span class="pill-slider">
+                        <svg class="pill-icon moon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <svg class="pill-icon sun" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/></svg>
+                    </span>
+                </label>
+            </div>
+        </header>
+
+        <!-- ═══ COMPARE OVERLAY MODAL ═══ -->
+        <div id="compareModal" class="compare-modal-backdrop" style="display:none;">
+            <div class="compare-modal-card glass-panel">
+                <div class="modal-header">
+                    <h3>Compare With Another Asset</h3>
+                    <button id="closeCompareModalBtn" class="btn-close-icon">&times;</button>
+                </div>
+                <p class="modal-sub">Overlay a 2nd ticker on the chart to analyze normalized percentage return performance.</p>
+                <div class="compare-input-row">
+                    <input type="text" id="compareSymbolInput" class="input-field uppercase-mono" placeholder="Enter symbol (e.g. MSFT, NVDA, TSLA, SPY)...">
+                    <button id="applyCompareBtn" class="btn btn-primary">Compare Asset</button>
+                </div>
+                <div class="compare-quick-chips">
+                    <span class="chip-lbl">Quick Compare:</span>
+                    <button class="comp-chip" onclick="setCompareTicker('SPY')">SPY</button>
+                    <button class="comp-chip" onclick="setCompareTicker('QQQ')">QQQ</button>
+                    <button class="comp-chip" onclick="setCompareTicker('NVDA')">NVDA</button>
+                    <button class="comp-chip" onclick="setCompareTicker('MSFT')">MSFT</button>
+                    <button class="comp-chip" onclick="setCompareTicker('TSLA')">TSLA</button>
+                </div>
+                <div id="activeCompareBanner" style="display:none; margin-top:14px;">
+                    <div class="active-compare-box">
+                        <span>Currently comparing with: <strong id="activeCompareTickerText">MSFT</strong></span>
+                        <button class="btn btn-sm" style="color:var(--red-down); border-color:var(--border-subtle);" onclick="clearCompareTicker()">Remove Compare</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ MAIN BODY: Left Toolbar + Workspace ═══ -->
+        <div class="terminal-body">
+
+            <!-- Left Toolbar (Docked, 48px) -->
+            <aside class="left-toolbar">
+                <button class="tool-icon-btn active" data-tool="pointer" title="Pointer (Select & Pan)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7 18 3-7 7-3L3 3z"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="crosshair" title="Crosshair (Precision Inspect)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+                </button>
+                
+                <div class="tool-divider"></div>
+                
+                <button class="tool-icon-btn" data-tool="line" title="Trend Line (Peak/Valley Snapped)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><circle cx="21" cy="7" r="2"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="text" title="Annotation (Text Note & Target)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="channel" title="Parallel Channel">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 18h16"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="polyline" title="Elliott Wave / Polyline (Multi-point)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18l6-10 6 6 4-8"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="measure" title="Measure Ruler (Delta Price & %)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3v18"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="fib" title="Fibonacci Retracement">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="rectangle" title="Supply / Demand Zone">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+                </button>
+                <button class="tool-icon-btn" data-tool="pen" title="Freehand Pen">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-1.5M2 22s5-1 7-3l11-11-4-4L5 15c-2 2-3 7-3 7z"/></svg>
+                </button>
+
+                <!-- 🧽 ERASER TOOL (Deletes specific clicked drawing) -->
+                <button class="tool-icon-btn" data-tool="eraser" title="Eraser (Click any drawing to delete it)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L18 15"/><path d="M18 12L12 6"/></svg>
+                </button>
+                
+                <div class="tool-divider"></div>
+
+                <!-- 🎨 COLOR PALETTE PICKER CHIPS -->
+                <div class="color-palette-strip" title="Drawing Color">
+                    <button class="color-dot active" data-color="#f59e0b" style="background:#f59e0b;"></button>
+                    <button class="color-dot" data-color="#10b981" style="background:#10b981;"></button>
+                    <button class="color-dot" data-color="#f43f5e" style="background:#f43f5e;"></button>
+                    <button class="color-dot" data-color="#3b82f6" style="background:#3b82f6;"></button>
+                    <button class="color-dot" data-color="#a855f7" style="background:#a855f7;"></button>
+                    <button class="color-dot" data-color="#ffffff" style="background:#ffffff;"></button>
+                </div>
+                
+                <div class="tool-divider"></div>
+                
+                <!-- Zoom Controls -->
+                <button id="zoomInBtn" class="tool-icon-btn" title="Zoom In (+)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                </button>
+                <button id="zoomOutBtn" class="tool-icon-btn" title="Zoom Out (-)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                </button>
+                <button id="zoomResetBtn" class="tool-icon-btn" title="Fit to Screen (R)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                </button>
+                
+                <div class="tool-divider"></div>
+                
+                <button class="tool-icon-btn active" data-tool="magnet" title="Magnet Peak/Valley Snap (Auto-assist)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v7a6 6 0 0 0 12 0V3M6 3h4M14 3h4"/></svg>
+                </button>
+                <button id="undoBtn" class="tool-icon-btn" title="Undo (Ctrl+Z)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l4-4M3 9l4 4M3 9h11a5 5 0 0 1 0 10h-3"/></svg>
+                </button>
+                <button id="redoBtn" class="tool-icon-btn" title="Redo (Ctrl+Y)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 9l-4-4M21 9l-4 4M21 9H10a5 5 0 0 0 0 10h3"/></svg>
+                </button>
+                <button id="clearDrawingsBtn" class="tool-icon-btn danger" title="Clear All Drawings">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+            </aside>
+
+            <!-- ═══ CENTER WORKSPACE ═══ -->
+            <main class="center-workspace">
+
+                <!-- SECTION 1: Chart Terminal -->
+                <section id="analysis-view" class="view-section active">
+                    
+                    <!-- Chart Controls Bar -->
+                    <div class="chart-controls-frame">
+                        <!-- High-Contrast OHLCV Readout -->
+                        <div class="ohlcv-readout">
+                            <div class="ohlc-chip"><span class="lbl">O</span><span id="readoutOpen" class="val">0.00</span></div>
+                            <div class="ohlc-chip"><span class="lbl">H</span><span id="readoutHigh" class="val">0.00</span></div>
+                            <div class="ohlc-chip"><span class="lbl">L</span><span id="readoutLow" class="val">0.00</span></div>
+                            <div class="ohlc-chip primary"><span class="lbl">C</span><span id="readoutClose" class="val">0.00</span></div>
+                            <div class="ohlc-chip change"><span id="readoutChange" class="green">+0.00 (+0.00%)</span></div>
+                            <div class="ohlc-chip volume"><span class="lbl">VOL</span><span id="readoutVolume" class="val">0.0M</span></div>
+                        </div>
+
+                        <!-- Compare active legend badge -->
+                        <div id="chartCompareLegend" class="compare-chart-legend" style="display:none;">
+                            <span class="legend-dot" style="background:#06b6d4;"></span>
+                            <span id="compareLegendTickerText">MSFT</span>
+                            <span id="compareLegendPriceText" class="val">$0.00</span>
+                            <button onclick="clearCompareTicker()" class="btn-clear-comp">&times;</button>
+                        </div>
+
+                        <div class="toolbar-right-controls">
+                            <!-- Segmented Chart Style -->
+                            <div class="segmented-control">
+                                <button class="type-btn active" data-type="candlestick" title="Candlesticks">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 2v20M9 6h6M9 18h6M15 2v20"/></svg>
+                                    <span>Candles</span>
+                                </button>
+                                <button class="type-btn" data-type="area" title="Area Glow">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8v11H3z"/></svg>
+                                    <span>Area</span>
+                                </button>
+                                <button class="type-btn" data-type="line" title="Clean Line">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8"/></svg>
+                                    <span>Line</span>
+                                </button>
+                            </div>
+
+                            <!-- Indicator Chips -->
+                            <div class="indicator-chips">
+                                <button id="toggleSma20" class="chip-btn active">SMA 20</button>
+                                <button id="toggleSma50" class="chip-btn active">SMA 50</button>
+                                <button id="toggleRsi" class="chip-btn active">RSI 14</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Chart Stage -->
+                    <div class="chart-stage">
+                        <div id="chartContainer" class="main-price-chart"></div>
+                        <canvas id="drawingCanvas" class="drawing-overlay"></canvas>
+                        
+                        <!-- Floating Glass Tooltip -->
+                        <div id="floatingTooltip" class="chart-tooltip-box" style="display:none;">
+                            <div class="tooltip-header">
+                                <span id="tooltipDate" class="tooltip-date">2026-08-18</span>
+                                <span class="tooltip-badge">INSPECT</span>
+                            </div>
+                            <div class="tooltip-grid">
+                                <div class="tooltip-cell"><span>Close</span><strong id="tooltipClose">$0.00</strong></div>
+                                <div class="tooltip-cell"><span>Open</span><strong id="tooltipOpen">$0.00</strong></div>
+                                <div class="tooltip-cell"><span>High</span><strong id="tooltipHigh">$0.00</strong></div>
+                                <div class="tooltip-cell"><span>Low</span><strong id="tooltipLow">$0.00</strong></div>
+                                <div class="tooltip-cell full"><span>Volume</span><strong id="tooltipVol">0M</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RSI Sub-chart -->
+                    <div id="rsiContainer" class="rsi-stage"></div>
+
+                    <!-- 📊 ASSET FUNDAMENTALS & COMPARISON PANEL (Under the chart) -->
+                    <div id="assetOverviewPanel" class="asset-overview-panel">
+                        <div id="primaryAssetCard" class="asset-metric-card primary-asset">
+                            <div class="card-top-row">
+                                <div>
+                                    <h4 id="assetCardTicker" class="asset-symbol">AAPL</h4>
+                                    <span id="assetCardName" class="asset-company">Apple Inc.</span>
+                                </div>
+                                <span id="assetCardTrendBadge" class="trend-badge bullish">BULLISH</span>
+                            </div>
+                            <div class="metrics-kpi-grid">
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">LAST CLOSE</span>
+                                    <span id="kpiClosePrice" class="kpi-val">$0.00</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">24H CHANGE</span>
+                                    <span id="kpiChange" class="kpi-val green">+0.00 (+0.00%)</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">VOLUME</span>
+                                    <span id="kpiVolume" class="kpi-val">0.0M</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">MARKET CAP</span>
+                                    <span id="kpiMarketCap" class="kpi-val">$0.00T</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">52W RANGE</span>
+                                    <span id="kpi52Week" class="kpi-val">$0 - $0</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">RSI (14)</span>
+                                    <span id="kpiRsi" class="kpi-val">50.0</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">SMA 20</span>
+                                    <span id="kpiSma20" class="kpi-val">$0.00</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">SMA 50</span>
+                                    <span id="kpiSma50" class="kpi-val">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Compare Card (Visible when compare is active) -->
+                        <div id="secondaryCompareCard" class="asset-metric-card compare-asset" style="display:none;">
+                            <div class="card-top-row">
+                                <div>
+                                    <h4 id="compCardTicker" class="asset-symbol text-cyan">MSFT</h4>
+                                    <span id="compCardName" class="asset-company">Microsoft Corp.</span>
+                                </div>
+                                <span id="compCardTrendBadge" class="trend-badge neutral">NEUTRAL</span>
+                            </div>
+                            <div class="metrics-kpi-grid">
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">LAST CLOSE</span>
+                                    <span id="compKpiClosePrice" class="kpi-val">$0.00</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">24H CHANGE</span>
+                                    <span id="compKpiChange" class="kpi-val green">+0.00 (+0.00%)</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">VOLUME</span>
+                                    <span id="compKpiVolume" class="kpi-val">0.0M</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">MARKET CAP</span>
+                                    <span id="compKpiMarketCap" class="kpi-val">$0.00T</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">52W RANGE</span>
+                                    <span id="compKpi52Week" class="kpi-val">$0 - $0</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">RSI (14)</span>
+                                    <span id="compKpiRsi" class="kpi-val">50.0</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">SMA 20</span>
+                                    <span id="compKpiSma20" class="kpi-val">$0.00</span>
+                                </div>
+                                <div class="kpi-box">
+                                    <span class="kpi-lbl">SMA 50</span>
+                                    <span id="compKpiSma50" class="kpi-val">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- SECTION 2: Watchlist View -->
+                <section id="watchlist-view" class="view-section">
+                    <div class="panel-card glass-panel staggered-entrance">
+                        
+                        <!-- Page Header & Stats Banner -->
+                        <div class="card-hero-header">
+                            <div>
+                                <h2 class="hero-title">Market Watchlist</h2>
+                                <p class="hero-subtitle">Real-time quotes, technical momentum, and 52-week price channels.</p>
+                            </div>
+                            <div class="hero-actions">
+                                <button class="btn-refresh" onclick="loadWatchlist()">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                                    <span>Sync Market</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Add Ticker Control Bar -->
+                        <div class="watchlist-bar">
+                            <div class="search-input-group">
+                                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" id="tickerInput" class="input-field" placeholder="Add ticker symbol (e.g. NVDA, AAPL, BTC-USD, AMD)...">
+                                <button id="addTickerBtn" class="btn btn-primary">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    <span>Add Symbol</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Data Table -->
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Asset & Company</th>
+                                        <th>Price</th>
+                                        <th>Change ($)</th>
+                                        <th>Change (%)</th>
+                                        <th>Volume</th>
+                                        <th>Market Cap</th>
+                                        <th>52-Week Range</th>
+                                        <th style="text-align:right;">Terminal Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="watchlistBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3: Alerts Engine -->
+                <section id="alerts-view" class="view-section">
+                    <div class="alerts-layout-grid">
+                        
+                        <!-- Left Panel: Create Alert Rule -->
+                        <div class="panel-card glass-panel staggered-entrance">
+                            <div class="card-hero-header">
+                                <div>
+                                    <h2 class="hero-title">Alert Engine</h2>
+                                    <p class="hero-subtitle">Automated price threshold and technical momentum triggers.</p>
+                                </div>
+                            </div>
+
+                            <form class="modern-form-group" onsubmit="event.preventDefault(); createAlert();">
+                                <div class="form-row">
+                                    <label class="form-label">Ticker Symbol</label>
+                                    <input type="text" id="alertTickerInput" class="input-field uppercase-mono" placeholder="AAPL, TSLA, NVDA" required>
+                                </div>
+                                <div class="form-row">
+                                    <label class="form-label">Trigger Condition</label>
+                                    <select id="alertConditionSelect" class="select-field">
+                                        <option value="price_above">📈 Price Rises Above ($ Target)</option>
+                                        <option value="price_below">📉 Price Drops Below ($ Stop)</option>
+                                        <option value="change_above">⚡ Momentum Moves (+/- % Change)</option>
+                                        <option value="rsi_above">🔥 RSI Overbought (RSI > 70)</option>
+                                        <option value="rsi_below">❄️ RSI Oversold (RSI < 30)</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <label class="form-label">Trigger Threshold</label>
+                                    <input type="number" step="any" id="alertThresholdInput" class="input-field" placeholder="e.g. 250.00" required>
+                                </div>
+                                <button id="createAlertBtn" type="submit" class="btn btn-primary btn-block">
+                                    <span>Deploy Alert Rule</span>
+                                </button>
+                            </form>
+
+                            <div class="alert-quick-eval">
+                                <button id="evaluateAlertsBtn" class="btn btn-outline btn-block">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    <span>Run Manual Evaluation</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Configured Rules & Audit Logs -->
+                        <div class="panel-card glass-panel staggered-entrance delay-1">
+                            <div class="card-hero-header">
+                                <div>
+                                    <h3 class="hero-title-sm">Configured Alert Rules</h3>
+                                    <p class="hero-subtitle">Active trigger monitors.</p>
+                                </div>
+                            </div>
+                            <div class="table-container compact">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rule ID</th>
+                                            <th>Symbol</th>
+                                            <th>Condition</th>
+                                            <th>Threshold</th>
+                                            <th style="text-align:right;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="alertsBody"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="audit-log-section">
+                                <div class="audit-log-header">
+                                    <span class="audit-title">LIVE AUDIT LOG CONSOLE</span>
+                                    <span class="live-pulse">● STREAMING</span>
+                                </div>
+                                <div id="alertLogsList" class="terminal-log-stream"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 4: Reports & Automated Intelligence Scheduler -->
+                <section id="reports-view" class="view-section">
+                    <div class="reports-layout-grid">
+                        
+                        <!-- Left Panel: Automated Schedule Dispatcher -->
+                        <div class="panel-card glass-panel staggered-entrance">
+                            <div class="card-hero-header">
+                                <div>
+                                    <h2 class="hero-title">Automated Dispatcher</h2>
+                                    <p class="hero-subtitle">Schedule PDF & HTML briefings delivered at exact days & times.</p>
+                                </div>
+                            </div>
+
+                            <form class="modern-form-group" onsubmit="event.preventDefault(); createSchedule();">
+                                <div class="form-row">
+                                    <label class="form-label">Delivery Frequency</label>
+                                    <select id="schedFrequencySelect" class="select-field" onchange="toggleScheduleDaySelect()">
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                    </select>
+                                </div>
+
+                                <div id="schedDayRow" class="form-row" style="display:none;">
+                                    <label class="form-label">Delivery Day of Week</label>
+                                    <select id="schedDaySelect" class="select-field">
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label class="form-label">Dispatch Time (HH:MM)</label>
+                                    <input type="time" id="schedTimeInput" class="input-field" value="09:00" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label class="form-label">Recipient Email Address</label>
+                                    <input type="email" id="schedRecipientInput" class="input-field" placeholder="investor@example.com" required>
+                                </div>
+
+                                <button id="createScheduleBtn" type="submit" class="btn btn-primary btn-block">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    <span>Deploy Automated Schedule</span>
+                                </button>
+                            </form>
+
+                            <!-- Instant Manual Generation -->
+                            <div class="manual-gen-box">
+                                <span class="form-label">INSTANT AD-HOC REPORT</span>
+                                <div style="display:flex; gap:8px; margin-top:8px;">
+                                    <input type="email" id="reportRecipientInput" class="input-field" placeholder="Email (optional)">
+                                    <button id="generateReportBtn" class="btn btn-outline" style="white-space:nowrap;">Generate Now</button>
+                                </div>
+                                <div id="reportStatus" style="margin-top:12px;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Active Schedules List -->
+                        <div class="panel-card glass-panel staggered-entrance delay-1">
+                            <div class="card-hero-header">
+                                <div>
+                                    <h3 class="hero-title-sm">Active Automated Schedules</h3>
+                                    <p class="hero-subtitle">Cron-driven background email dispatchers.</p>
+                                </div>
+                                <button class="btn-refresh" onclick="loadSchedules()">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                                    <span>Sync</span>
+                                </button>
+                            </div>
+
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Frequency</th>
+                                            <th>Dispatch Time</th>
+                                            <th>Recipient</th>
+                                            <th>Last Dispatched</th>
+                                            <th style="text-align:right;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="schedulesBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </main>
+        </div>
+
+        <!-- ═══ BOTTOM FOOTER (Chart Timeframe Strip) ═══ -->
+        <footer class="terminal-footer">
+            <div class="footer-timeframe-bar">
+                <button class="tf-btn" data-period="1d">1D</button>
+                <button class="tf-btn" data-period="5d">5D</button>
+                <button class="tf-btn" data-period="1mo">1M</button>
+                <button class="tf-btn" data-period="3mo">3M</button>
+                <button class="tf-btn" data-period="6mo">6M</button>
+                <button class="tf-btn active" data-period="1y">1Y</button>
+                <button class="tf-btn" data-period="2y">2Y</button>
+                <button class="tf-btn" data-period="5y">5Y</button>
+                <button class="tf-btn" data-period="max">MAX</button>
+            </div>
+            <div class="footer-status-bar">
+                <span id="marketBadge" class="status-badge live">&bull; LIVE</span>
+                <span class="status-item">EXCHANGE: <strong id="marketStateText">NYSE/NASDAQ</strong></span>
+                <span class="status-item">FEED: <strong class="text-accent">60 FPS REALTIME</strong></span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
