@@ -1,3 +1,4 @@
+import uvicorn
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, Request, Form
@@ -204,7 +205,6 @@ async def test_run_schedule(schedule_id: str):
         raise HTTPException(status_code=400, detail=str(e))
 
 def start_server(host: str = "127.0.0.1", port: int = 8000):
-    import uvicorn
     uvicorn.run("stock_tracker.web.app:app", host=host, port=port, reload=True)
 
 if __name__ == "__main__":
