@@ -132,37 +132,37 @@ Generates PDF and HTML report files inside the `data/reports/` directory.
 stock-viewer/
 ├── stock_tracker/
 │   ├── config/
-│   │   └── settings.py          # Environment settings loader
+│   │   └── settings.py            # Environment settings loader
 │   ├── database/
-│   │   └── storage.py           # Persistent JSON storage layer
+│   │   └── storage.py             # Persistent JSON storage layer
 │   ├── core/
-│   │   ├── data_fetcher.py      # Market data retrieval and caching
-│   │   ├── technical_analysis.py# Mathematical indicator algorithms
-│   │   ├── alert_engine.py      # Alert trigger evaluation and email dispatcher
-│   │   ├── report_generator.py  # PDF and HTML report compiler
-│   │   └── scheduler.py         # Background cron job scheduler
-│   ├── cli/
-│   │   └── interface.py         # Rich terminal interactive dashboard
+│   │   ├── data_fetcher.py        # Market data retrieval and caching
+│   │   ├── technical_analysis.py  # Mathematical indicator algorithms
+│   │   ├── alert_engine.py        # Alert trigger evaluation and email dispatcher
+│   │   ├── report_generator.py    # PDF and HTML report compiler
+│   │   └── scheduler.py           # Background cron job scheduler
+│   ├── cli/ 
+│   │   └── interface.py           # Rich terminal interactive dashboard
 │   └── web/
-│       ├── app.py               # FastAPI application and REST endpoints
+│       ├── app.py                 # FastAPI application and REST endpoints
 │       ├── templates/
-│       │   └── index.html       # Single-page application interface
+│       │   └── index.html         # Single-page application interface
 │       └── static/
-│           ├── css/style.css    # Institutional design system and typography
-│           └── js/app.js        # Charting, drawing tools, and API client
+│           ├── css/style.css      # Institutional design system and typography
+│           └── js/app.js          # Charting, drawing tools, and API client
 ├── tests/
-│   ├── test_data_fetcher.py     # Data pipeline unit tests
-│   ├── test_technical_analysis.py# Indicator math unit tests
-│   ├── test_alert_engine.py     # Alert evaluation unit tests
-│   └── test_scheduler.py        # Cron scheduler unit tests
+│   ├── test_data_fetcher.py       # Data pipeline unit tests
+│   ├── test_technical_analysis.py # Indicator math unit tests
+│   ├── test_alert_engine.py       # Alert evaluation unit tests
+│   └── test_scheduler.py          # Cron scheduler unit tests
 ├── data/
-│   ├── stock_data.json          # Application data store
-│   └── reports/                 # Generated briefing documents
-├── main.py                      # Application entrypoint
-├── requirements.txt             # Python dependency manifest
-├── .env.example                 # Environment configuration template
-├── .gitignore                   # Version control ignore rules
-└── README.md                    # Project documentation
+│   ├── stock_data.json            # Application data store
+│   └── reports/                   # Generated briefing documents
+├── main.py                        # Application entrypoint
+├── requirements.txt               # Python dependency manifest
+├── .env.example                   # Environment configuration template
+├── .gitignore                     # Version control ignore rules
+└── README.md                      # Project documentation
 ```
 
 ---
