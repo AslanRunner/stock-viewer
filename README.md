@@ -174,8 +174,4 @@ Execute the automated test suite with `pytest`:
 python -m pytest
 ```
 
----
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
