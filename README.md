@@ -1,4 +1,4 @@
-# Stock Viewer — Financial Terminal & Market Intelligence Suite
+# Stock Viewer - Financial Terminal
 
 <div align="center">
 
