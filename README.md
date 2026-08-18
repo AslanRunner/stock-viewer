@@ -33,30 +33,30 @@ The platform combines a modern, hardware-accelerated web interface with an inter
   * **Trend Lines:** Peak-to-valley support/resistance vectors with live delta price and percentage change indicators.
   * **Parallel Regression Channels:** Upper resistance, lower support, and dashed equilibrium midlines.
   * **Fibonacci Retracements:** Standard golden ratio retracement levels (`0.0%`, `23.6%`, `38.2%`, `50.0%`, `61.8%`, `78.6%`, `100.0%`).
-  * **Elliott Wave / Polylines:** Multi-point impulse wave structure counting (`1`, `2`, `3`, `4`, `5`).
+  * **Elliott Wave / Polylines:** Multi-point impulse wave structure counting .
   * **Supply and Demand Zones:** Translucent boundary boxes (`12%` alpha) with price level tags that preserve candlestick visibility.
   * **Measurement Ruler:** Calculates price spread, percentage variance, and bar interval counts.
   * **Single-Item Eraser:** Targeted deletion of individual drawing shapes without clearing the canvas.
-  * **Color Palette:** Six color tiers (Amber, Emerald, Coral, Electric Blue, Purple, White) for visual separation of analysis layers.
-  * **Undo / Redo Stack:** Multi-step history management via keyboard shortcuts (`Ctrl+Z`, `Ctrl+Y`).
+  * **Color Palette:** Six color tiers for visual separation of analysis layers.
+  * **Undo / Redo Stack:** Multi-step history management via keyboard shortcuts.
 
 ### 2. Multi-Asset Comparison Mode
-* Overlays secondary benchmark instruments (e.g., `SPY`, `QQQ`, `NVDA`, `MSFT`) as normalized percentage return curves on top of the primary chart.
+* Overlays secondary benchmark instruments as normalized percentage return curves on top of the primary chart.
 * Provides side-by-side fundamental metric comparisons.
 
 ### 3. Automated Alert Engine
 * Real-time trigger evaluation across configured portfolios:
-  * Price target breakouts (`price_above`)
-  * Stop-loss triggers (`price_below`)
-  * Volatility and percentage momentum spikes (`change_above`)
-  * RSI overbought conditions (`rsi_above > 70`)
-  * RSI oversold conditions (`rsi_below < 30`)
+  * Price target breakouts 
+  * Stop-loss triggers 
+  * Volatility and percentage momentum spikes 
+  * RSI overbought conditions 
+  * RSI oversold conditions 
 * Dispatches SMTP email notifications and logs real-time audit entries in the console.
 
 ### 4. Scheduled Report Dispatcher
 * Background daemon thread for scheduled automated market briefings:
   * **Frequencies:** Daily or Weekly (selectable day of the week).
-  * **Execution Time:** Precise local time dispatching (`HH:MM`).
+  * **Execution Time:** Precise local time dispatching.
   * **Format Support:** Generates structured PDF documents and responsive HTML briefing summaries.
   * **On-Demand Generation:** Instant manual report compilation and export.
 
