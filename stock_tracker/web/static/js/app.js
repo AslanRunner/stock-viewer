@@ -2085,7 +2085,7 @@ async function evaluateAlerts() {
     } catch (err) { console.error("Failed to evaluate alerts:", err); }
 }
 
-// ═══ REPORTS ═══
+// REPORTS 
 async function generateReport() {
     const sendEmail = document.getElementById("sendEmailCheckbox") ? document.getElementById("sendEmailCheckbox").checked : false;
     const recipientInput = document.getElementById("reportRecipientInput");
