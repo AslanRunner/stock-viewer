@@ -1,8 +1,3 @@
-// ══════════════════════════════════════════════════════════
-// PROTERMINAL — App Controller
-// Black + Orange Theme • High Performance 60FPS Chart • Dynamic Coordinate Anchoring
-// ══════════════════════════════════════════════════════════
-
 let mainChart = null;
 let priceSeries = null;
 let currentPriceLine = null;
