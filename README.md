@@ -6,7 +6,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat-square&logo=fastapi)
 ![TradingView Lightweight Charts](https://img.shields.io/badge/TradingView-Lightweight_Charts_v4-131722?style=flat-square&logo=tradingview)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
-![Build](https://img.shields.io/badge/tests-8%20passed-brightgreen?style=flat-square)
+
 
 **A high-performance financial analytics workstation, institutional charting canvas, and automated market intelligence engine built with Python, FastAPI, and TradingView Lightweight Charts.**
 
