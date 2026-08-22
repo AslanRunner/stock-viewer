@@ -88,7 +88,7 @@ cd stock-viewer
 python -m pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables (Optional)
+### 3. Configure Environment Variables 
 Copy `.env.example` to `.env` and provide your SMTP credentials for email alerts and automated reports:
 ```bash
 cp .env.example .env
