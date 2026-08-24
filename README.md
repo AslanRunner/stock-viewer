@@ -1,4 +1,4 @@
-# Stock Viewer — Financial Terminal 
+# Stock Viewer - Financial Terminal 
 <div align="center">
 
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue?style=flat-square&logo=python)
