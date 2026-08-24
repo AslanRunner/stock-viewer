@@ -1,4 +1,4 @@
-# Stock Viewer - Financial Terminal
+# Stock Viewer — Financial Terminal & Market Intelligence Suite
 
 <div align="center">
 
@@ -6,11 +6,17 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat-square&logo=fastapi)
 ![TradingView Lightweight Charts](https://img.shields.io/badge/TradingView-Lightweight_Charts_v4-131722?style=flat-square&logo=tradingview)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
-
+![Build](https://img.shields.io/badge/tests-8%20passed-brightgreen?style=flat-square)
 
 **A high-performance financial analytics workstation, institutional charting canvas, and automated market intelligence engine built with Python, FastAPI, and TradingView Lightweight Charts.**
 
-[Overview](#overview) • [Core Capabilities](#core-capabilities) • [Installation](#installation--setup) • [Quickstart](#quickstart) • [Architecture](#architecture) • [Testing](#running-tests) 
+<br />
+
+![Stock Viewer Terminal Dashboard](docs/images/terminal_chart.png)
+
+<br />
+
+[Overview](#overview) • [Interface Showcase](#interface-showcase) • [Core Capabilities](#core-capabilities) • [Installation](#installation--setup) • [Quickstart](#quickstart) • [Architecture](#architecture) • [Testing](#running-tests) • [License](#license)
 
 </div>
 
@@ -24,6 +30,36 @@ The platform combines a modern, hardware-accelerated web interface with an inter
 
 ---
 
+## Interface Showcase
+
+### 1. Financial Terminal & Technical Drawing Engine
+Real-time 60 FPS candlestick chart with multi-tool technical drawings (trendlines, channels, Fibonacci levels, Elliott waves, translucent demand zones), volume histogram, RSI sub-chart, and instant asset fundamentals KPI card.
+
+![Terminal Chart](docs/images/terminal_chart.png)
+
+---
+
+### 2. Market Watchlist
+Real-time quotes, daily dollar and percentage momentum, volume, market capitalization, and 52-week price channels across tracking portfolios.
+
+![Market Watchlist](docs/images/market_watchlist.png)
+
+---
+
+### 3. Alert Engine & Live Audit Console
+Configurable price breakout, stop-loss, and RSI overbought/oversold rules with automated SMTP email notifications and live audit log streaming.
+
+![Alert Engine](docs/images/alert_engine.png)
+
+---
+
+### 4. Automated Report Dispatcher
+Background cron scheduler for automated daily or weekly executive PDF and HTML market briefings delivered at exact user-configured times.
+
+![Automated Dispatcher](docs/images/automated_dispatcher.png)
+
+---
+
 ## Core Capabilities
 
 ### 1. Interactive Technical Charting Engine
@@ -33,30 +69,30 @@ The platform combines a modern, hardware-accelerated web interface with an inter
   * **Trend Lines:** Peak-to-valley support/resistance vectors with live delta price and percentage change indicators.
   * **Parallel Regression Channels:** Upper resistance, lower support, and dashed equilibrium midlines.
   * **Fibonacci Retracements:** Standard golden ratio retracement levels (`0.0%`, `23.6%`, `38.2%`, `50.0%`, `61.8%`, `78.6%`, `100.0%`).
-  * **Elliott Wave / Polylines:** Multi-point impulse wave structure counting .
+  * **Elliott Wave / Polylines:** Multi-point impulse wave structure counting (`1`, `2`, `3`, `4`, `5`).
   * **Supply and Demand Zones:** Translucent boundary boxes (`12%` alpha) with price level tags that preserve candlestick visibility.
   * **Measurement Ruler:** Calculates price spread, percentage variance, and bar interval counts.
   * **Single-Item Eraser:** Targeted deletion of individual drawing shapes without clearing the canvas.
-  * **Color Palette:** Six color tiers for visual separation of analysis layers.
-  * **Undo / Redo Stack:** Multi-step history management via keyboard shortcuts.
+  * **Color Palette:** Six color tiers (Amber, Emerald, Coral, Electric Blue, Purple, White) for visual separation of analysis layers.
+  * **Undo / Redo Stack:** Multi-step history management via keyboard shortcuts (`Ctrl+Z`, `Ctrl+Y`).
 
 ### 2. Multi-Asset Comparison Mode
-* Overlays secondary benchmark instruments as normalized percentage return curves on top of the primary chart.
+* Overlays secondary benchmark instruments (e.g., `SPY`, `QQQ`, `NVDA`, `MSFT`) as normalized percentage return curves on top of the primary chart.
 * Provides side-by-side fundamental metric comparisons.
 
 ### 3. Automated Alert Engine
 * Real-time trigger evaluation across configured portfolios:
-  * Price target breakouts 
-  * Stop-loss triggers 
-  * Volatility and percentage momentum spikes 
-  * RSI overbought conditions 
-  * RSI oversold conditions 
+  * Price target breakouts (`price_above`)
+  * Stop-loss triggers (`price_below`)
+  * Volatility and percentage momentum spikes (`change_above`)
+  * RSI overbought conditions (`rsi_above > 70`)
+  * RSI oversold conditions (`rsi_below < 30`)
 * Dispatches SMTP email notifications and logs real-time audit entries in the console.
 
 ### 4. Scheduled Report Dispatcher
 * Background daemon thread for scheduled automated market briefings:
   * **Frequencies:** Daily or Weekly (selectable day of the week).
-  * **Execution Time:** Precise local time dispatching.
+  * **Execution Time:** Precise local time dispatching (`HH:MM`).
   * **Format Support:** Generates structured PDF documents and responsive HTML briefing summaries.
   * **On-Demand Generation:** Instant manual report compilation and export.
 
@@ -88,7 +124,7 @@ cd stock-viewer
 python -m pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables 
+### 3. Configure Environment Variables (Optional)
 Copy `.env.example` to `.env` and provide your SMTP credentials for email alerts and automated reports:
 ```bash
 cp .env.example .env
@@ -130,39 +166,41 @@ Generates PDF and HTML report files inside the `data/reports/` directory.
 
 ```
 stock-viewer/
+├── docs/
+│   └── images/                  # Interface screenshots for documentation
 ├── stock_tracker/
 │   ├── config/
-│   │   └── settings.py            # Environment settings loader
+│   │   └── settings.py          # Environment settings loader
 │   ├── database/
-│   │   └── storage.py             # Persistent JSON storage layer
+│   │   └── storage.py           # Persistent JSON storage layer
 │   ├── core/
-│   │   ├── data_fetcher.py        # Market data retrieval and caching
-│   │   ├── technical_analysis.py  # Mathematical indicator algorithms
-│   │   ├── alert_engine.py        # Alert trigger evaluation and email dispatcher
-│   │   ├── report_generator.py    # PDF and HTML report compiler
-│   │   └── scheduler.py           # Background cron job scheduler
-│   ├── cli/ 
-│   │   └── interface.py           # Rich terminal interactive dashboard
+│   │   ├── data_fetcher.py      # Market data retrieval and caching
+│   │   ├── technical_analysis.py# Mathematical indicator algorithms
+│   │   ├── alert_engine.py      # Alert trigger evaluation and email dispatcher
+│   │   ├── report_generator.py  # PDF and HTML report compiler
+│   │   └── scheduler.py         # Background cron job scheduler
+│   ├── cli/
+│   │   └── interface.py         # Rich terminal interactive dashboard
 │   └── web/
-│       ├── app.py                 # FastAPI application and REST endpoints
+│       ├── app.py               # FastAPI application and REST endpoints
 │       ├── templates/
-│       │   └── index.html         # Single-page application interface
+│       │   └── index.html       # Single-page application interface
 │       └── static/
-│           ├── css/style.css      # Institutional design system and typography
-│           └── js/app.js          # Charting, drawing tools, and API client
+│           ├── css/style.css    # Institutional design system and typography
+│           └── js/app.js        # Charting, drawing tools, and API client
 ├── tests/
-│   ├── test_data_fetcher.py       # Data pipeline unit tests
-│   ├── test_technical_analysis.py # Indicator math unit tests
-│   ├── test_alert_engine.py       # Alert evaluation unit tests
-│   └── test_scheduler.py          # Cron scheduler unit tests
+│   ├── test_data_fetcher.py     # Data pipeline unit tests
+│   ├── test_technical_analysis.py# Indicator math unit tests
+│   ├── test_alert_engine.py     # Alert evaluation unit tests
+│   └── test_scheduler.py        # Cron scheduler unit tests
 ├── data/
-│   ├── stock_data.json            # Application data store
-│   └── reports/                   # Generated briefing documents
-├── main.py                        # Application entrypoint
-├── requirements.txt               # Python dependency manifest
-├── .env.example                   # Environment configuration template
-├── .gitignore                     # Version control ignore rules
-└── README.md                      # Project documentation
+│   ├── stock_data.json          # Application data store
+│   └── reports/                 # Generated briefing documents
+├── main.py                      # Application entrypoint
+├── requirements.txt             # Python dependency manifest
+├── .env.example                 # Environment configuration template
+├── .gitignore                   # Version control ignore rules
+└── README.md                    # Project documentation
 ```
 
 ---
@@ -174,4 +212,8 @@ Execute the automated test suite with `pytest`:
 python -m pytest
 ```
 
+---
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

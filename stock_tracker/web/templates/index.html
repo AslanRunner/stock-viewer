@@ -18,6 +18,8 @@
 <body class="dark-theme">
 
     <div class="terminal-layout">
+
+        <!-- ═══ TOP HEADER BAR ═══ -->
         <header class="terminal-header">
             <div class="header-left">
                 <div class="terminal-brand">
@@ -120,7 +122,7 @@
             </div>
         </div>
 
-        <!--MAIN BODY: Left Toolbar + Workspace  -->
+        <!-- ═══ MAIN BODY: Left Toolbar + Workspace ═══ -->
         <div class="terminal-body">
 
             <!-- Left Toolbar (Docked, 48px) -->
@@ -159,7 +161,7 @@
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-1.5M2 22s5-1 7-3l11-11-4-4L5 15c-2 2-3 7-3 7z"/></svg>
                 </button>
 
-                <!-- Eraser Tool -->
+                <!-- Eraser Tool (Deletes specific clicked drawing) -->
                 <button class="tool-icon-btn" data-tool="eraser" title="Eraser (Click any drawing to delete it)">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L18 15"/><path d="M18 12L12 6"/></svg>
                 </button>
@@ -205,7 +207,7 @@
                 </button>
             </aside>
 
-            <!--CENTER WORKSPACE-->
+            <!-- ═══ CENTER WORKSPACE ═══ -->
             <main class="center-workspace">
 
                 <!-- SECTION 1: Chart Terminal -->
@@ -327,7 +329,7 @@
                             </div>
                         </div>
 
-                        <!-- Secondary Compare Card-->
+                        <!-- Secondary Compare Card (Visible when compare is active) -->
                         <div id="secondaryCompareCard" class="asset-metric-card compare-asset" style="display:none;">
                             <div class="card-top-row">
                                 <div>
@@ -604,6 +606,7 @@
             </main>
         </div>
 
+        <!-- ═══ BOTTOM FOOTER (Chart Timeframe Strip) ═══ -->
         <footer class="terminal-footer">
             <div class="footer-timeframe-bar">
                 <button class="tf-btn" data-period="1d">1D</button>
