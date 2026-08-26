@@ -185,7 +185,7 @@ stock-viewer/
 │   └── web/
 │       ├── app.py               # FastAPI application and REST endpoints
 │       ├── templates/
-│       │   └── index.html       # Single-page application interface
+│       │   └── index.html       # Single-Page application interface
 │       └── static/
 │           ├── css/style.css    # Institutional design system and typography
 │           └── js/app.js        # Charting, drawing tools, and API client
@@ -212,5 +212,3 @@ Execute the automated test suite with `pytest`:
 ```bash
 python -m pytest
 ```
-
-
