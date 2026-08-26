@@ -31,7 +31,7 @@ The platform combines a modern, hardware-accelerated web interface with an inter
 
 ## Interface Showcase
 
-Visual previews of each module are stored in the `screenshots/` directory for visual reference.
+Visual previews of each module are stored in the `docs/` directory for visual reference.
 
 ### 1. Financial Terminal & Technical Drawing Engine
 Real-time 60 FPS candlestick chart with multi-tool technical drawings (trendlines, channels, Fibonacci levels, Elliott waves, translucent demand zones), volume histogram, RSI sub-chart, and instant asset fundamentals KPI card.
