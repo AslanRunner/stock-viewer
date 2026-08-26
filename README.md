@@ -198,8 +198,8 @@ stock-viewer/
 ├── main.py                      # Application entrypoint
 ├── requirements.txt             # Python dependency manifest
 ├── .env.example                 # Environment configuration template
-├── .gitignore                   # Version control ignore rules
-└── README.md                    # Project documentation
+└── .gitignore                   # Version control ignore rules
+
 ```
 
 ---
