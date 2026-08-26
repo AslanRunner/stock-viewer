@@ -11,7 +11,7 @@
 
 <br />
 
-![Stock Viewer Terminal Dashboard](docs/images/terminal_chart.png)
+![Stock Viewer Terminal Dashboard](screenshots/terminal_chart.png)
 
 <br />
 
@@ -31,31 +31,33 @@ The platform combines a modern, hardware-accelerated web interface with an inter
 
 ## Interface Showcase
 
+Visual previews of each module are stored in the `screenshots/` directory for visual reference.
+
 ### 1. Financial Terminal & Technical Drawing Engine
 Real-time 60 FPS candlestick chart with multi-tool technical drawings (trendlines, channels, Fibonacci levels, Elliott waves, translucent demand zones), volume histogram, RSI sub-chart, and instant asset fundamentals KPI card.
 
-![Terminal Chart](docs/images/terminal_chart.png)
+![Terminal Chart](screenshots/terminal_chart.png)
 
 ---
 
 ### 2. Market Watchlist
 Real-time quotes, daily dollar and percentage momentum, volume, market capitalization, and 52-week price channels across tracking portfolios.
 
-![Market Watchlist](docs/images/market_watchlist.png)
+![Market Watchlist](screenshots/market_watchlist.png)
 
 ---
 
 ### 3. Alert Engine & Live Audit Console
 Configurable price breakout, stop-loss, and RSI overbought/oversold rules with automated SMTP email notifications and live audit log streaming.
 
-![Alert Engine](docs/images/alert_engine.png)
+![Alert Engine](screenshots/alert_engine.png)
 
 ---
 
 ### 4. Automated Report Dispatcher
 Background cron scheduler for automated daily or weekly executive PDF and HTML market briefings delivered at exact user-configured times.
 
-![Automated Dispatcher](docs/images/automated_dispatcher.png)
+![Automated Dispatcher](screenshots/automated_dispatcher.png)
 
 ---
 
@@ -165,8 +167,8 @@ Generates PDF and HTML report files inside the `data/reports/` directory.
 
 ```
 stock-viewer/
-├── docs/
-│   └── images/                  # Interface screenshots for documentation
+├── screenshots/                 # Application interface screenshots and visual assets
+├── docs/                        # Additional documentation and assets
 ├── stock_tracker/
 │   ├── config/
 │   │   └── settings.py          # Environment settings loader
