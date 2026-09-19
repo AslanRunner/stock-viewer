@@ -11,7 +11,7 @@
 
 <br />
 
-![Stock Viewer Terminal Dashboard](screenshots/terminal_chart.png)
+![Stock Viewer Terminal Dashboard](docs/images/terminal_chart.png)
 
 <br />
 
@@ -36,28 +36,28 @@ Visual previews of each module are stored in the `docs/` directory for visual re
 ### 1. Financial Terminal & Technical Drawing Engine
 Real-time 60 FPS candlestick chart with multi-tool technical drawings (trendlines, channels, Fibonacci levels, Elliott waves, translucent demand zones), volume histogram, RSI sub-chart, and instant asset fundamentals KPI card.
 
-![Terminal Chart](screenshots/terminal_chart.png)
+![Terminal Chart](docs/images/terminal_chart.png)
 
 ---
 
 ### 2. Market Watchlist
 Real-time quotes, daily dollar and percentage momentum, volume, market capitalization, and 52-week price channels across tracking portfolios.
 
-![Market Watchlist](screenshots/market_watchlist.png)
+![Market Watchlist](docs/images/market_watchlist.png)
 
 ---
 
 ### 3. Alert Engine & Live Audit Console
 Configurable price breakout, stop-loss, and RSI overbought/oversold rules with automated SMTP email notifications and live audit log streaming.
 
-![Alert Engine](screenshots/alert_engine.png)
+![Alert Engine](docs/images/alert_engine.png)
 
 ---
 
 ### 4. Automated Report Dispatcher
 Background cron scheduler for automated daily or weekly executive PDF and HTML market briefings delivered at exact user-configured times.
 
-![Automated Dispatcher](screenshots/automated_dispatcher.png)
+![Automated Dispatcher](docs/images/automated_dispatcher.png)
 
 ---
 
@@ -116,7 +116,7 @@ Background cron scheduler for automated daily or weekly executive PDF and HTML m
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/stock-viewer.git
+git clone https://github.com/AslanRunner/stock-viewer.git
 cd stock-viewer
 ```
 
@@ -167,7 +167,7 @@ Generates PDF and HTML report files inside the `data/reports/` directory.
 
 ```
 stock-viewer/
-├── screenshots/                 # Application interface screenshots and visual assets
+├── docs/images/                 # Application interface screenshots and visual assets
 ├── docs/                        # Additional documentation and assets
 ├── stock_tracker/
 │   ├── config/
@@ -212,3 +212,18 @@ Execute the automated test suite with `pytest`:
 ```bash
 python -m pytest
 ```
+
+
+---
+
+## Disclaimer
+
+Stock Viewer is an educational analytics project, not financial advice. Market data can be delayed or incomplete; verify important decisions with authoritative sources.
+
+## Contributing
+
+Issues and pull requests are welcome. For calculation changes, include tests that cover the affected indicator or alert behavior.
+
+## License
+
+Released under the [MIT License](LICENSE).
